@@ -96,3 +96,16 @@ services:
       - DISTRIBUCION=${DISTRIBUCION:-zipf}
       - TOTAL_CONSULTAS=${TOTAL_CONSULTAS:-1000}
       - INTERVALO_SEGUNDOS=${INTERVALO_SEGUNDOS:-0.1}
+
+  consumidor_kafka:
+    build: ./consumidor_kafka
+    container_name: consumidor_kafka
+    depends_on:
+      - kafka
+      - servicio_cache
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:29092
+      - TOPIC_CONSULTAS=consultas
+      - TOPIC_RETRY=consultas_retry
+      - CACHE_URL=http://servicio_cache:8002
+      - CONSUMER_GROUP=grupo_consultas
