@@ -84,3 +84,15 @@ services:
       - DISTRIBUCION=${DISTRIBUCION:-zipf}
       - TOTAL_CONSULTAS=${TOTAL_CONSULTAS:-1000}
       - INTERVALO_SEGUNDOS=${INTERVALO_SEGUNDOS:-0.1}
+
+  productor_kafka:
+    build: ./productor_kafka
+    container_name: productor_kafka
+    depends_on:
+      - kafka
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:29092
+      - TOPIC_CONSULTAS=consultas
+      - DISTRIBUCION=${DISTRIBUCION:-zipf}
+      - TOTAL_CONSULTAS=${TOTAL_CONSULTAS:-1000}
+      - INTERVALO_SEGUNDOS=${INTERVALO_SEGUNDOS:-0.1}
